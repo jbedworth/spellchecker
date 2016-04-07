@@ -100,6 +100,8 @@ GEM
     rb-fsevent (0.9.7)
     rb-inotify (0.9.7)
       ffi (>= 0.5.0)
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
     spring (1.6.4)
     spring-watcher-listen (2.0.0)
       listen (>= 2.7, < 4.0)
@@ -128,6 +130,7 @@ DEPENDENCIES
   pg (~> 0.18)
   puma
   rails (>= 5.0.0.beta3, < 5.1)
+  rest-client
   spring
   spring-watcher-listen (~> 2.0.0)
   tzinfo-data
