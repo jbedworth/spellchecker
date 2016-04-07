@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="PostgreSQL - spellchecker@localhost" uuid="98513b4f-0181-4587-b612-4a0e207a978d">
+      <secret-storage>master_key</secret-storage>
+      <user-name>john</user-name>
+    </data-source>
+    <data-source name="Rails spellchecker: test" uuid="37576480-4f13-4899-8bfd-e72c68a9fe71" />
+    <data-source name="Rails spellchecker: production" uuid="dd82c983-87d3-4e7f-a98f-08cc9bf80c6b">
+      <user-name>spellchecker</user-name>
+      <user-password>df96df8fdf97df8adfefdfe4dffcdff1df8ddff9dffadfefdfe6dfe6dfe9dfe2dfefdfe9dfe1dfefdff8dff5dfeedfebdffedfebdfe8dfebdff9dfefdff5dffadfebdff9dff9dffddfe5dff8dfeedf8ddff7df8adf8fdf94</user-password>
+    </data-source>
+    <data-source name="Rails spellchecker: development" uuid="635f7a3f-9d28-433f-b0ee-4ef7642fe8c1">
+      <user-name>john</user-name>
+      <user-password>dfdedfd3dfd8dfcbdfc4dfdedf9adf9adf9b</user-password>
+      <schema-pattern>spellchecker_development.pg_catalog spellchecker_development.public</schema-pattern>
+      <default-schemas>spellchecker_development.public</default-schemas>
+    </data-source>
+  </component>
+</project>
