@@ -26,3 +26,6 @@ Instructions:
    since we're using Rails 5 beta 3. Darn, I should have had you install that without documentation
    before this step...
         bundle install
+
+
+        rails db:create
