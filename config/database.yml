@@ -80,6 +80,4 @@ test:
 #
 production:
   <<: *default
-  database: spellchecker_production
-  username: spellchecker
-  password: <%= ENV['SPELLCHECKER_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>
