@@ -5,6 +5,6 @@ Rails.application.routes.draw do
   # mount ActionCable.server => '/cable'
 
   match 'spelling/:word', to: 'spelling#check_word', via: [:get, :post]
-
+  match 'spelling/', to: 'spelling#check_word', via: [:get, :post]
 
 end
