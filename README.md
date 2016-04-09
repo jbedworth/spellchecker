@@ -98,11 +98,11 @@ Rails 5/Postgres app.  On to the fun part!
 
 1) Point your browser to the app and have fun!
 
-        http://localhost:8080/spellling/$word.
+        http://localhost:8080/spellling/House
 
    Or use curl.
 
-        curl http://localhost:8080/spelling/House
+        curl http://localhost:8080/spelling/$word=House
 
 2) You can run my all of unit and integration tests here:
 
