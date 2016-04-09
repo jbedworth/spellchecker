@@ -5,3 +5,6 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+# Load the dictionary from the specified URL
+DictionaryWord.load_from 'http://tinyurl.com/bvapsn7'

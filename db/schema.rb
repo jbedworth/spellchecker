@@ -11,18 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160407123550) do
+ActiveRecord::Schema.define(version: 20160409060457) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "dictionary_words", force: :cascade do |t|
-    t.string  "word"
-    t.string  "hash_string"
-    t.integer "hash_integer"
+    t.string "word"
+    t.string "hash_string"
   end
 
-  add_index "dictionary_words", ["hash_integer"], name: "index_dictionary_words_on_hash_integer", using: :btree
   add_index "dictionary_words", ["hash_string"], name: "index_dictionary_words_on_hash_string", using: :btree
   add_index "dictionary_words", ["word"], name: "index_dictionary_words_on_word", unique: true, using: :btree
 
