@@ -9,7 +9,7 @@
 ## which is called in seed.rb.
 ## This allows rails developers who haven't had their coffee yet to set this app up on autopilot (who hasn't
 ## run rails db:init/create, db:seed half asleep?).  I like the convenience of having the load_from method
-## live in this table, simply because this is the only table in our app, and having the knowledge of how to
+## live in this model, simply because this is the only table in our app, and having the knowledge of how to
 ## populate itself here, close to validations and what not, nice; even though it's more standard to just do
 ## it as a function in seed.rb.
 ##
@@ -34,10 +34,10 @@ class DictionaryWord < ApplicationRecord
 
   def self.lookup( word )
     _lookup = Spellable.new( word )
-    if _lookup.is_mixed_case? ## >> never return a result for mixed case words even if they are in the dictionary
+    if _lookup.is_mixed_case? ## >> never return a result for mIxEd case words even if they are in the dictionary
       DictionaryWord.none
     else                      ## >> do a case-insensitive search for the word
-      DictionaryWord.where( :word => _lookup.word.downcase )
+      DictionaryWord.where( :word => _lookup.search_term )
     end
   end
 
@@ -49,6 +49,7 @@ class DictionaryWord < ApplicationRecord
   # letters throwing things off.  Combined, these two clauses give us the ability to utilize the power of SQL to
   # implement spell checking, and since the database is relatively static and there is no notion of user dictionary,
   # we can add mirror/slave dbs at will, and likely achieve very high cache hit rates in production.
+  # TODO - there is a minor bug here that is masked by the "repeating character" clause of the rule. HeLo technically shouldn't match suggestion "Hello" because it is missing a consonant.
 
   def self.suggestions( string )
     _lookup = Spellable.new( string )

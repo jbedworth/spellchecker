@@ -26,6 +26,10 @@ class Spellable
     @regex
   end
 
+  def search_term
+    Spellable.clean_up_leading( @word.downcase )
+  end
+
   def is_mixed_case?
     @mixedcase ||= ! is_lower_case? && ! is_title_case? && ! is_upper_case?
   end
@@ -49,6 +53,11 @@ class Spellable
   end
 
   private
+
+  def self.clean_up_leading(string)
+    # strip out all non-alpha characters at the front of the string, stopping at normal text
+    string.gsub(/^\W+/, '')
+  end
 
   def self.remove_vowels(string)
     # Assumption: For this project, we are considering 'y' to be a consonant
