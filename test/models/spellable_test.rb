@@ -5,13 +5,13 @@ class SpellableTest < ActiveSupport::TestCase
     assert true
   end
 
-  test 'creating a Spellable strips specials but leaves casing on word attribute' do
+  test 'creating a Spellable leaves casing on word attribute' do
     result = Spellable.new('WORD I WROTE')
-    assert_equal 'WORDIWROTE', result.word
+    assert_equal 'WORD I WROTE', result.word
   end
-  test 'creating a Spellable strips specials but leaves apostrophe on word attribute' do
+  test 'creating a Spellable leaves apostrophe on word attribute' do
     result = Spellable.new("WORD'S I WROTE")
-    assert_equal "WORD'SIWROTE", result.word
+    assert_equal "WORD'S I WROTE", result.word
   end
   test 'creating a Spellable strips specials dupes vowels on word_hash attribute' do
     result = Spellable.new('WORD I WROTE')

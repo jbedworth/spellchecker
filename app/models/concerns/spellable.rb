@@ -1,13 +1,15 @@
 ## The purpose of this class is to encapsulate a "spellable" (Spell-Checkable) word in our API.  There are
 ## utilities for basic word clean up, computing alpha search hashes and regex terms, and managing case
 ## sensitivity.  For such a simple, single purpose app, I could have left this in the model, but it feels
-## better factored out here, and is also _slightly_ more convenient for use in the controller here.
+## better factored out here, and is also _slightly_ more convenient for use in the controller here. Plus,
+## it was lighter weight to test this core functionality in isolation. And, I like the name, it makes code
+## more legible.
 
 class Spellable
 
   def initialize( string )
-    @word = Spellable.clean_up( string )
-    _mini_word = @word.downcase.squeeze
+    @word = string
+    _mini_word = Spellable.clean_up( @word ).downcase.squeeze
     @word_hash = Spellable.remove_vowels( _mini_word )
     @regex = Spellable.compute_regex( _mini_word )
   end
@@ -41,6 +43,11 @@ class Spellable
     @uppercase ||= word.upcase === word
   end
 
+  def self.clean_up(string)
+    # strip out all non alpha characters
+    string.gsub(/[^a-z']/i, '')
+  end
+
   private
 
   def self.remove_vowels(string)
@@ -51,16 +58,15 @@ class Spellable
   # Compute 'magic' search term, that when combined with the vowel based hash search term,
   # yields suggestions that are only off by repeated characters, missing vowels, and casing
   # differences (and combinations of these) - we basically want the entire word, downcased
-  # and squeezed of repeating characters, interjected with '%' symbols.
+  # and squeezed of repeating characters, interjected with '%' symbols. When SQL LIKE clause
+  # searches on this term, it ensures the unique letters of the word are all included in the
+  # search. The drawback here is that it omits suggestions that are missing a letter that was
+  # in the original word (e.g. Hello would be missed when searching for "ello" because of the
+  # missing 'h'). Fortunately, this meets our explicit requirements for what constitutes a
+  # misspelling perfectly.
 
   def self.compute_regex( string )
     '%' + string.gsub(/(.{1})/, '\1%')
-  end
-
-  def self.clean_up(string)
-    # Assumption: In the current word-set, we ignore all non-ascii alpha characters except
-    # the apostrophe, which is used in our dictionary for at least one word.
-    string.gsub(/[^a-z']/i, '')
   end
 
 end
