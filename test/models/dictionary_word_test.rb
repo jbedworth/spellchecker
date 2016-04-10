@@ -8,7 +8,7 @@ class DictionaryWordTest < ActiveSupport::TestCase
   test 'Adding a word to the dictonary' do
     result = DictionaryWord.create(:word => 'Hello')
     assert_equal 'hello', result.word
-    assert_equal 'hl', result.hash_string
+    assert_equal 'hll', result.hash_string
   end
 
   test 'Finding suggestions (negative) length and last part not matching' do
@@ -113,5 +113,16 @@ class DictionaryWordTest < ActiveSupport::TestCase
     assert_equal 1, result.count
     assert_equal 'mississippi', result.first
   end
+
+  test 'Ensure words that are missing one or more consonants are marked as misspelled, and suggestions only meet if no extra cons' do
+    word = 'helo'
+    DictionaryWord.create([{:word => 'Hello'}, {:word => 'Helio'}, {:word => 'Helios'}, {:word => 'Halo'}, {:word => 'Hellion'}])
+    result = DictionaryWord.lookup(word)
+    assert_equal 0, result.count
+    result = DictionaryWord.suggestions(word)
+    assert_equal 1, result.count
+    assert_equal 'helio', result.first
+  end
+
 
 end

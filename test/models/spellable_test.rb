@@ -21,9 +21,9 @@ class SpellableTest < ActiveSupport::TestCase
     result = Spellable.new("WORD'S I WROTE")
     assert_equal "wrd'swrt", result.word_hash
   end
-  test 'creating a Spellable strips specials vowels and dupes on word_hash attribute' do
+  test 'creating a Spellable strips specials vowels on word_hash attribute' do
     result = Spellable.new("mississippi")
-    assert_equal 'mssp', result.word_hash
+    assert_equal 'msssspp', result.word_hash
   end
 
   test "Spellable can identify lowercase as is_lower_case?" do

@@ -75,7 +75,7 @@ class SpellingControllerTest < ActionDispatch::IntegrationTest
     assert_response 200, @response.body
     result = response_body_as_json
     assert_equal false, result['correct']
-    assert_equal 4, result['suggestions'].size
+    assert_equal 2, result['suggestions'].size
   end
 
   test "validate the service responds to /spelling/dulz with 404 when dictionary contains dual, duel, duello, dull, dumb" do

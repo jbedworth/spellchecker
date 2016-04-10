@@ -9,22 +9,27 @@ class Spellable
 
   def initialize( string )
     @word = string
-    _mini_word = Spellable.clean_up( @word ).downcase.squeeze
-    @word_hash = Spellable.remove_vowels( _mini_word )
-    @regex = Spellable.compute_regex( _mini_word )
+    @word_regex = Spellable.compute_regex( @word )
+    @word_hash = Spellable.compute_hash( @word )
+    @word_hash_regex = Spellable.compute_hash_regex( @word )
   end
 
   def word
     @word
   end
 
+  def regex
+    @word_regex
+  end
+
   def word_hash
     @word_hash
   end
 
-  def regex
-    @regex
+  def word_hash_regex
+    @word_hash_regex
   end
+
 
   def search_term
     Spellable.clean_up_leading( @word.downcase )
@@ -75,7 +80,17 @@ class Spellable
   # misspelling perfectly.
 
   def self.compute_regex( string )
-    '%' + string.gsub(/(.{1})/, '\1%')
+    _tmp = Spellable.clean_up( string ).downcase.squeeze
+    '%' + _tmp.gsub(/(.{1})/, '\1%')
+  end
+
+  def self.compute_hash( string )
+    Spellable.remove_vowels( Spellable.clean_up( string ).downcase )
+  end
+
+  def self.compute_hash_regex( string )
+    _tmp = Spellable.remove_vowels( Spellable.clean_up( string ).downcase )
+    _tmp.gsub(/(.)\1{1,}/, '\1+')
   end
 
 end
