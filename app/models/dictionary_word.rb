@@ -1,25 +1,5 @@
 ## This class represents our dictionary, and along with the controller, represents the majority of the logic in
-## our little service.
-##
-## I would have just called it Dictionary, and had a class method for adding words, but, this is an
-## ActionRecord model and that doesn't fit the Rails convention. So, DictionaryWord/dictionary_words it is...
-##
-## Also somewhat non-standard, I added a class method here for loading the dictionary from:
-##    http://www-01.sil.org/linguistics/wordlists/english/wordlist/wordsEn.txt (tinyurl.com/bvapsn7)
-## which is called in seed.rb.
-## This allows rails developers who haven't had their coffee yet to set this app up on autopilot (who hasn't
-## run rails db:init/create, db:seed half asleep?).  I like the convenience of having the load_from method
-## live in this model, simply because this is the only table in our app, and having the knowledge of how to
-## populate itself here, close to validations and what not, nice; even though it's more standard to just do
-## it as a function in seed.rb.
-##
-## And, it feels funny writing so much comment text for such a small/simple app.  Normally, I feel well written
-## code makes the best comments, and I reserve explicit comments for when I'm doing something tricksy.  There
-## isn't much magic happening here, but since I'm the new guy I'm going to over-do the commenting thing.
-##
-## Finally, I sort of regret selecting word_hash as a field name, because it's not technically a numerical hash
-## function that maps data of arbitrary size to data of fixed size, but it's close enough and does make this
-## table behave sort of like a hash table, sort of.
+## our service.
 
 require 'rest-client'
 

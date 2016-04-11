@@ -10,6 +10,11 @@ class SpellingControllerTest < ActionDispatch::IntegrationTest
     assert_response 404, @response.body
   end
 
+  test "validate the service responds to /spelling/ with 404" do
+    get "/spelling/"
+    assert_response 404, @response.body
+  end
+
   test "validate the service responds to /spelling/Hello with 200 when dictionary contains hello" do
     DictionaryWord.create(:word => 'Hello')
     get '/spelling/Hello'
