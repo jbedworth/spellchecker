@@ -1,31 +1,34 @@
+## Very straightforward controller for our service.  If we are passed in a word, check to see if it is an exact
+## match for an item in our dictionary.  If it is, return 200/correct:true JSON.  If no exact match exists, check to
+## see if there are any potential corrections in our dictionary.  If so, return 200/correct:false and the array.
+## Otherwise, return 404.
+
 class SpellingController < ApplicationController
   def check_word
-    # If the word is an exact match for a word in our dictionary, and it meets the following rules, it's correct.
-    # If it's not an exact match, or, it violates a rule, lookup suggestions.  If there aren't any, return 404.  If we find
-    # some appropriate suggestions, return 200 and an array of suggestions.
-    # TODO the spec indirectly says to not return a response body at all if the response is 404, check if my standard is ok
-    #  My thought is, if we get this far (aka the api call is allowed and valid), we should return at the very least
-    #  an empty response body, which differentiates from a blocked, disallowed, or invalid "truly unreachable" 404.
-    @payload = {}               # << Initialize to an empty object
-    @status_code = 404          # << Initialize to Not Found
-    @response_correct = false   # << Initialize to false - not correct
     @word = params[:word]
+    @status = 404
+    @json = nil
     unless @word.nil?
-      _spellable = Spellable.new( @word )
-      @entry = DictionaryWord.lookup( _spellable.word )
-      if @entry.count === 1 # << Found an exact match!!
-        @status_code = 200
-        @response_correct = true
-        @payload = { correct: @response_correct }
+      @entry = DictionaryWord.lookup( @word )
+      if @entry.count === 1
+        # << Found an exact match. Word is correct! Set status 200 and set correct:true in JSON
+        @status = 200
+        @json = { correct: true }
       else # << No exact match, search for suggestions
-        @suggestions = DictionaryWord.suggestions( _spellable.word )
+        @suggestions = DictionaryWord.suggestions( @word )
         if @suggestions.any?
-          @status_code = 200
-          _response_correct = false
-          @payload = { correct: @response_correct, suggestions: @suggestions }
+          # We found some word suggestions, return them in our JSON and set status 200
+          @status = 200
+          @json = { correct: false, suggestions: @suggestions }
         end
       end
     end
-    render :json => @payload, :status => @status_code
+    if @json.nil?
+      # if no JSON, just return the status
+      render :status => @status
+    else
+      # return both the json and the status
+      render :json => @json, :status => @status
+    end
   end
 end

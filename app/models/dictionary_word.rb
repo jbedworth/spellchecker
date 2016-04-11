@@ -44,7 +44,7 @@ class DictionaryWord < ApplicationRecord
   def self.suggestions( string )
     _lookup = Spellable.new( string )
     DictionaryWord.where('hash_string SIMILAR TO :word_hash AND word LIKE :regex',
-                          word_hash: _lookup.word_hash_regex, regex: _lookup.regex ).pluck( :word )
+                          word_hash: _lookup.word_hash_regex, regex: _lookup.word_regex ).pluck( :word )
   end
 
   # Load the dictionary from the specified URL. Follow redirects, if we end up with
@@ -75,9 +75,9 @@ private
   # Clean up dictonary_words entry before saving it, compute the suggestion search hash.
 
   def _before_save
-    _t = Spellable.new( self.word )
-    self.word = Spellable.clean_up( _t.word.downcase )
-    self.hash_string = _t.word_hash
+    _word = Spellable.new( self.word )
+    self.word = _word.dictionary_word
+    self.hash_string = _word.word_hash
   end
 
 end
