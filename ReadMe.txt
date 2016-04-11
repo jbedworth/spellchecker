@@ -58,8 +58,13 @@ probably all ready set up, or second nature for you.  Including it here for comp
         ln -sfv /usr/local/opt/postgresql/*.plist ~/Library/LaunchAgents
         launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
         initdb /usr/local/var/postgres -E utf8
+        createdb `whoami`
 
-   This should set up and get your local database running.  I always have to fiddle with this part.
+   This should set up and get your local database running, more or less.  On some environments (Ubuntu)
+   You might have to install the dev libs and tools by hand to get this working and rails wired in.
+   I usually have to fiddle with this part to get it perfect, but on MacOSX with HomeBrew, my PostgreSQL
+   setup was a dream right out of the box.  It was almost scary how seamless it was.
+
    Let me know if you have any issues and I'll try to help you out (especially if your on Ubuntu or
    "gasp" Windows). A good article that I've found useful is:
      https://www.codefellows.org/blog/three-battle-tested-ways-to-install-postgresql
@@ -79,6 +84,7 @@ Rails 5/Postgres app.  On to the fun part!
 
 3) Set up the database that holds our dictionary.
 
+        rails db:create
         rails db:migrate
         rails db:seed
 
